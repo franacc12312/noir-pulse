@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Repo {
+  id           Int       @id @default(autoincrement())
+  githubId     Int       @unique
+  fullName     String    @unique
+  description  String?
+  stars        Int       @default(0)
+  isFork       Boolean   @default(false)
+  archived     Boolean   @default(false)
+  createdAt    DateTime
+  lastSyncedAt DateTime?
+  commits      Commit[]
+
+  @@index([fullName])
+}
+
+model Commit {
+  id             Int      @id @default(autoincrement())
+  sha            String   @unique
+  repoId         Int
+  repo           Repo     @relation(fields: [repoId], references: [id])
+  authorUsername String
+  committedAt    DateTime
+  message        String?
+
+  @@index([repoId])
+  @@index([committedAt])
+  @@index([authorUsername])
+}
+
+model WeeklyStats {
+  id           Int      @id @default(autoincrement())
+  weekStart    DateTime @unique
+  totalCommits Int      @default(0)
+  uniqueDevs   Int      @default(0)
+  activeRepos  Int      @default(0)
+  newRepos     Int      @default(0)
+
+  @@index([weekStart])
+}

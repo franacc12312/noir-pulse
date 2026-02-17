@@ -1,0 +1,52 @@
+name: Noir Ecosystem Sync
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Every Monday at 6 AM UTC
+  workflow_dispatch:
+    inputs:
+      batch_size:
+        description: "Repos per batch (0 = all)"
+        required: false
+        default: "0"
+      batch_offset:
+        description: "Offset for batch processing"
+        required: false
+        default: "0"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+
+      - run: npm ci
+
+      - run: npx prisma generate
+
+      - name: Discover Repos
+        run: npx tsx scripts/discover-repos.ts
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Sync Commits
+        run: npx tsx scripts/sync-commits.ts
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BATCH_SIZE: ${{ github.event.inputs.batch_size || '0' }}
+          BATCH_OFFSET: ${{ github.event.inputs.batch_offset || '0' }}
+
+      - name: Aggregate Stats
+        run: npx tsx scripts/aggregate.ts
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
