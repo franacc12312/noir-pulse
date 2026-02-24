@@ -68,6 +68,28 @@ export default function Methodology() {
             </p>
           </div>
           <div>
+            <h4 className="text-white font-medium mb-1">
+              Exclude core team repos
+            </h4>
+            <p>
+              When enabled, this toggle removes all repositories owned or
+              maintained by Aztec Labs and the Noir core team. This includes
+              official organization repos ({" "}
+              <code className="text-accent-salmon bg-surface-elevated px-1 py-0.5 rounded text-xs">
+                noir-lang/*
+              </code>
+              ,{" "}
+              <code className="text-accent-salmon bg-surface-elevated px-1 py-0.5 rounded text-xs">
+                AztecProtocol/*
+              </code>
+              ) as well as personal repos from known Aztec Labs employees
+              (founders, engineers, and developer relations). Contracted
+              partners like Wonderland are <em>not</em> excluded. The goal is to
+              isolate organic, independent community adoption from internal core
+              team development.
+            </p>
+          </div>
+          <div>
             <h4 className="text-white font-medium mb-1">Data Source</h4>
             <p>
               All data is sourced from the GitHub REST API. Repos are discovered

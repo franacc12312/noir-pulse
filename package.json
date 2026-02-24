@@ -1,5 +1,5 @@
 {
-  "name": "noir-tracker",
+  "name": "aztec-pulse",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,6 +14,7 @@
     "pipeline:discover": "tsx scripts/discover-repos.ts",
     "pipeline:sync": "tsx scripts/sync-commits.ts",
     "pipeline:aggregate": "tsx scripts/aggregate.ts",
+    "pipeline:tvl": "tsx scripts/sync-tvl.ts",
     "pipeline:all": "tsx scripts/pipeline.ts"
   },
   "dependencies": {

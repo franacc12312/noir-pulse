@@ -5,11 +5,12 @@ const steps = [
   { name: "Discover Repos", script: "scripts/discover-repos.ts" },
   { name: "Sync Commits", script: "scripts/sync-commits.ts" },
   { name: "Aggregate Weekly Stats", script: "scripts/aggregate.ts" },
+  { name: "Sync TVL", script: "scripts/sync-tvl.ts" },
 ];
 
 async function main() {
   console.log("╔══════════════════════════════════════╗");
-  console.log("║   Noir Ecosystem Pipeline            ║");
+  console.log("║   Aztec Pulse Pipeline               ║");
   console.log("╚══════════════════════════════════════╝\n");
 
   const startTime = Date.now();

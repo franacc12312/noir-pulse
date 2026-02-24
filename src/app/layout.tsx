@@ -13,20 +13,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NOIR | Ecosystem Activity Index",
+  title: "Aztec Pulse | Ecosystem Health Dashboard",
   description:
-    "Real-time development activity metrics for the Noir ecosystem across GitHub. Track commits, developers, and project growth.",
+    "Comprehensive ecosystem health dashboard for the Aztec Network. Track token metrics, TVL, network status, and developer activity.",
   openGraph: {
-    title: "NOIR Ecosystem Activity Index",
+    title: "Aztec Pulse | Ecosystem Health Dashboard",
     description:
-      "Real-time development activity metrics for the Noir ecosystem across GitHub.",
+      "Comprehensive ecosystem health dashboard for the Aztec Network.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "NOIR Ecosystem Activity Index",
+    title: "Aztec Pulse | Ecosystem Health Dashboard",
     description:
-      "Real-time development activity metrics for the Noir ecosystem across GitHub.",
+      "Comprehensive ecosystem health dashboard for the Aztec Network.",
   },
 };
 

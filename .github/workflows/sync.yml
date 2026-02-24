@@ -1,4 +1,4 @@
-name: Noir Ecosystem Sync
+name: Aztec Pulse Sync
 
 on:
   schedule:
@@ -50,3 +50,8 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Sync TVL
+        run: npx tsx scripts/sync-tvl.ts
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}

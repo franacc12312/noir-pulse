@@ -37,12 +37,24 @@ model Commit {
 }
 
 model WeeklyStats {
-  id           Int      @id @default(autoincrement())
-  weekStart    DateTime @unique
-  totalCommits Int      @default(0)
-  uniqueDevs   Int      @default(0)
-  activeRepos  Int      @default(0)
-  newRepos     Int      @default(0)
+  id                  Int      @id @default(autoincrement())
+  weekStart           DateTime @unique
+  totalCommits        Int      @default(0)
+  uniqueDevs          Int      @default(0)
+  activeRepos         Int      @default(0)
+  newRepos            Int      @default(0)
+  communityCommits    Int      @default(0)
+  communityDevs       Int      @default(0)
+  communityActiveRepos Int     @default(0)
+  communityNewRepos   Int      @default(0)
 
   @@index([weekStart])
+}
+
+model TvlSnapshot {
+  id     Int      @id @default(autoincrement())
+  date   DateTime @unique
+  tvlUsd Float
+
+  @@index([date])
 }

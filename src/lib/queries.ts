@@ -105,6 +105,48 @@ export async function getTopRepos(days: number = 30) {
   }));
 }
 
+export async function getTvlHistory(timeframe: Timeframe = "all") {
+  if (!prisma) return [];
+
+  const now = new Date();
+  let since: Date | undefined;
+
+  switch (timeframe) {
+    case "30d":
+      since = subDays(now, 30);
+      break;
+    case "90d":
+      since = subDays(now, 90);
+      break;
+    case "1y":
+      since = subDays(now, 365);
+      break;
+    case "all":
+      since = undefined;
+      break;
+  }
+
+  const snapshots = await prisma.tvlSnapshot.findMany({
+    where: since ? { date: { gte: since } } : undefined,
+    orderBy: { date: "asc" },
+  });
+
+  return snapshots.map((s) => ({
+    date: s.date.toISOString().split("T")[0],
+    tvlUsd: s.tvlUsd,
+  }));
+}
+
+export async function getCurrentTvl() {
+  if (!prisma) return null;
+
+  const latest = await prisma.tvlSnapshot.findFirst({
+    orderBy: { date: "desc" },
+  });
+
+  return latest ? { date: latest.date.toISOString().split("T")[0], tvlUsd: latest.tvlUsd } : null;
+}
+
 export async function getRepoGrowth() {
   if (!prisma) return [];
 
