@@ -1,5 +1,32 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Data Sync
+
+Aztec Pulse stores developer activity and TVL snapshots in Postgres through Prisma.
+Token and live network data are fetched at runtime.
+
+Required environment variables:
+
+```bash
+DATABASE_URL="postgresql://USER:PASSWORD@HOST/DATABASE?sslmode=require"
+GITHUB_TOKEN="github_pat_or_gh_token_for_local_sync"
+AZTEC_NODE_URL="optional_aztec_rpc_endpoint"
+```
+
+For GitHub Actions, add `DATABASE_URL` as an Actions secret. The workflow uses
+GitHub's automatic `GITHUB_TOKEN`, so no manual GitHub token secret is needed.
+
+Useful commands:
+
+```bash
+npm run pipeline:status
+npm run pipeline:all
+npm run pipeline:tvl
+```
+
+The scheduled sync runs daily at 06:00 UTC and can also be triggered manually
+from the GitHub Actions tab.
+
 ## Getting Started
 
 First, run the development server:

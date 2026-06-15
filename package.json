@@ -15,7 +15,9 @@
     "pipeline:sync": "tsx scripts/sync-commits.ts",
     "pipeline:aggregate": "tsx scripts/aggregate.ts",
     "pipeline:tvl": "tsx scripts/sync-tvl.ts",
-    "pipeline:all": "tsx scripts/pipeline.ts"
+    "pipeline:all": "tsx scripts/pipeline.ts",
+    "pipeline:status": "tsx scripts/status.ts",
+    "pipeline:validate-env": "tsx scripts/validate-env.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",

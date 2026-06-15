@@ -14,28 +14,28 @@ async function syncRepo(repo: {
   try {
     const commits = await fetchRepoCommits(repo.fullName, since);
 
-    let newCount = 0;
-    for (const commit of commits) {
+    const rows = commits.map((commit) => {
       const username = commit.author?.login || "unknown";
       const date = new Date(commit.commit.author.date);
       const message = commit.commit.message?.substring(0, 255) || null;
 
-      try {
-        await prisma.commit.upsert({
-          where: { sha: commit.sha },
-          create: {
-            sha: commit.sha,
-            repoId: repo.id,
-            authorUsername: username,
-            committedAt: date,
-            message,
-          },
-          update: {},
-        });
-        newCount++;
-      } catch {
-        // Duplicate SHA, skip
-      }
+      return {
+        sha: commit.sha,
+        repoId: repo.id,
+        authorUsername: username,
+        committedAt: date,
+        message,
+      };
+    });
+
+    let newCount = 0;
+    const batchSize = 100;
+    for (let i = 0; i < rows.length; i += batchSize) {
+      const result = await prisma.commit.createMany({
+        data: rows.slice(i, i + batchSize),
+        skipDuplicates: true,
+      });
+      newCount += result.count;
     }
 
     await prisma.repo.update({
